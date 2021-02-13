@@ -225,36 +225,39 @@ inline int List<T>::getLength() const
 	return m_nodeCount;
 }
 
-template<typename T>
-inline void List<T>::sort()
-{
-	int i, j; 
-   bool swapped; 
-   for (i = 0; i < getLength; i++)
-   {
-	   swapped = false;
-	   for (j = 0; j < n - i - 1; j++)
-	   {
-		   if(getData(begin, j) < getData(begin, j+ 1))
-		   {
-			   //Setting new value next to current node's next
-			   getData + 1 = this->begin * T->next;
-			   //Setting current node to next to value
-			   this->begin* T->next = value;
-			   //Set current node next's previous to value
-			   this->begin* T->next()->previous = value;
-			   //Increase list length
-			   this->mCount++;
-			   //Set current node to value
-			   begin* T = value;
-		   }
-	   }
+//I need help.
 
-	   // IF no two elements were swapped by inner loop, then break 
-	   if (swapped == false)
-		   break;
-   }
-}
+//template<typename T>
+//inline void List<T>::sort()
+//{
+//	int i, j; 
+//   bool swapped; 
+//   for (i = 0; i < getLength; i++)
+//   {
+//	   swapped = false;
+//	   for (j = 0; j < n - i - 1; j++)
+//	   {
+//		   if(getData(begin, j) < getData(begin, j+ 1))
+//		   {
+//			   //Setting new value next to current node's next
+//			   getData + 1 = this->begin * T->next;
+//			   //Setting current node to next to value
+//			   this->begin* T->next = value;
+//			   //Set current node next's previous to value
+//			   this->begin* T->next()->previous = value;
+//			   //Increase list length
+//			   this->mCount++;
+//			   //Set current node to value
+//			   begin* T = value;
+//		   }
+//	   }
+//
+//	   // IF no two elements were swapped by inner loop, then break 
+//	   if (swapped == false)
+//		   break;
+//   }
+//}
+
 
 template<typename T>
 inline const List<T>& List<T>::operator=(const List<T>& other)
