@@ -36,13 +36,14 @@ protected:
 template<typename T>
 inline List<T>::List()
 {
+	//Generating new list
 	initialize();
 }
 
 template<typename T>
 inline List<T>::List(const List<T>& other)
 {
-	
+	//Copying list
 	this->m_head = other.m_head;
 	this->m_tail = other.m_tail;
 	m_nodeCount = other.getLength();
@@ -56,13 +57,29 @@ template<typename T>
 inline List<T>::~List()
 {
 	destroy();
+}
 
+template<typename T>
+inline void List<T>::destroy()
+{
+	for (int i = 0; i < getLength; i++)
+	{
+		begin++;
+		delete begin* T;
+	}
+	delete this;
 }
 
 template<typename T>
 inline Iterator<T> List<T>::begin() const
 {
 	return new Iterator(m_head);
+}
+
+template<typename T>
+inline Iterator<T> List<T>::end() const
+{
+	return new Iterator(m_tail);
 }
 
 
@@ -135,6 +152,32 @@ inline void List<T>::pushBack(const T& value)
 }
 
 template<typename T>
+inline bool List<T>::insert(const T& value, int index)
+{
+	//Checking vaild index
+	if (index < getLength)
+	{
+		//Iteratoring to index
+		for (int i = 0; i < index; i++)
+		{
+			begin++;
+		}
+		//Setting new value next to current node's next
+		value.next = this->begin* T-> next;
+		//Setting current node to next to value
+		this->begin* T->next = value;
+		//Set current node next's previous to value
+		this->begin* T->next()->previous = value;
+		//Increase list length
+		this->mCount++;
+		//Set current node to value
+		begin* T = value;
+
+	}
+
+}
+
+template<typename T>
 inline bool List<T>::remove(const T& value)
 {
 	return false;
@@ -180,6 +223,46 @@ template<typename T>
 inline int List<T>::getLength() const
 {
 	return m_nodeCount;
+}
+
+template<typename T>
+inline void List<T>::sort()
+{
+	int i, j; 
+   bool swapped; 
+   for (i = 0; i < getLength; i++)
+   {
+	   swapped = false;
+	   for (j = 0; j < n - i - 1; j++)
+	   {
+		   if(getData(begin, j) < getData(begin, j+ 1))
+		   {
+			   //Setting new value next to current node's next
+			   getData + 1 = this->begin * T->next;
+			   //Setting current node to next to value
+			   this->begin* T->next = value;
+			   //Set current node next's previous to value
+			   this->begin* T->next()->previous = value;
+			   //Increase list length
+			   this->mCount++;
+			   //Set current node to value
+			   begin* T = value;
+		   }
+	   }
+
+	   // IF no two elements were swapped by inner loop, then break 
+	   if (swapped == false)
+		   break;
+   }
+}
+
+template<typename T>
+inline const List<T>& List<T>::operator=(const List<T>& other)
+{
+	this->m_head = other.m_head;
+	this->m_tail = other.m_tail;
+	m_nodeCount = other.getLength();
+	
 }
 
 
