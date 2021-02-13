@@ -6,12 +6,6 @@ int main()
 	_list->pushFront(1);
 	_list->pushFront(2);
 	_list->pushFront(3);
-	std::cout << _list->getLength();
-	_list->pushBack(4);
-	_list->pushBack(5);
-	_list->pushBack(6);
-	std::cout << _list->getLength();
-	_list->insert(7, 5);
-	std::cout << _list->getLength();
+	_list->insert(4, 1);
 	return 0;
 }

@@ -192,12 +192,15 @@ inline bool List<T>::insert(const T& value, int index)
 
 	m_nodeCount++;
 
+	//Inserts the data
 	std::cout << "INSERTED:" << temp->data << "AT INDEX :" << index << std::endl;
 	std::cout << "Between" << temp->next->data << "and" << temp->previous->data;
 
 	return true;
 
 }
+
+
 
 template<typename T>
 inline bool List<T>::remove(const T& value)
