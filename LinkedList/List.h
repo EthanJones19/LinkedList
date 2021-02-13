@@ -88,7 +88,7 @@ inline bool List<T>::contains(const T& object)
 {
 	//Checks if object is first or last
 	if (this->m_first->info == object) return true;
-	if (this->m_last->info == object) return true;
+	if (this->m_tail->info == object) return true;
 
 	//Starts iteratoring from front to back
 	for (auto i = this->begin(); i != this->end(); i++)
@@ -108,21 +108,21 @@ inline void List<T>::pushFront(const T& value)
 	newNode->data = value;
 
 	//Checks if the current list is empty
-	if (this->isListEmpty())
+	if (this->isEmpty())
 	{
 		//Makes first and last node equal to the node
-		this->m_first = newNode;
-		this->m_last = newNode;
-		this->mCount++;
+		this->m_head = newNode;
+		this->m_tail = newNode;
+		m_nodeCount++;
 		return;
 	}
 	//Take temporary node, makes it next equal to the first node
-	newNode->next = this->m_first;
+	newNode->next = this->m_head;
 	//Makes the first nodes previous equal temporary
-	this->m_first->previous = newNode;
+	this->m_head->previous = newNode;
 	//Make temporary first
-	this->m_first = newNode;
-	this->mCount++;
+	this->m_head = newNode;
+	m_nodeCount++;
 }
 
 template<typename T>
@@ -133,47 +133,69 @@ inline void List<T>::pushBack(const T& value)
 	newNode->data = value;
 
 	//Checks if the list is empty
-	if (this->m_last == nullptr)
+	if (this->m_tail == nullptr)
 	{
 		//Makes first and last equal to temporary
-		this->m_first = newNode;
-		this->m_last = newNode;
-		this->mCount++;
+		this->m_head = newNode;
+		this->m_tail = newNode;
+		m_nodeCount++;
 		return;
 	}
 
 	//Make current last equal temporary
-	this->m_last->next = newNode;
+	this->m_tail->next = newNode;
 	//Make previous equal to last
-	newNode->previous = this->m_last;
+	newNode->previous = this->m_tail;
 	//Makes this list last equal to temporary
-	this->m_last = newNode;
-	this->mCount++;
+	this->m_tail = newNode;
+	m_nodeCount++;
 }
 
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
-	//Checking vaild index
-	if (index < getLength)
+	// Ensure valid index
+	if (isEmpty())
 	{
-		//Iteratoring to index
-		for (int i = 0; i < index; i++)
-		{
-			begin++;
-		}
-		//Setting new value next to current node's next
-		value.next = this->begin* T-> next;
-		//Setting current node to next to value
-		this->begin* T->next = value;
-		//Set current node next's previous to value
-		this->begin* T->next()->previous = value;
-		//Increase list length
-		this->mCount++;
-		//Set current node to value
-		begin* T = value;
-
+		std::cout << "List Is Empty";
+		return false;
 	}
+	if ((index >= m_nodeCount || index < 0))
+	{
+		std::cout << "INVALID INDEX GIVEN";
+		return false;
+	}
+
+
+	// Create node pointer to hold new value
+	Node<T>* temp = new Node<T>(value);
+
+	// Set Current Node to head
+	Node<T>* current = m_head;
+	// Iterate to index
+	for (int i = 0; i < index; i++)
+	{
+		if (current->next != nullptr)
+		{
+			current = current->next;
+		}
+	}
+
+	// Set Previous Nodes Next To temp Node
+	current->previous->next = temp;
+	//Set Temp Previous to Current Previous
+	temp->previous = current->previous;
+	//Set Temp Next to current 
+	temp->next = current;
+	//Set Current Previous to temp 
+	current->previous = temp;
+
+	m_nodeCount++;
+
+	std::cout << "INSERTED:" << temp->data << "AT INDEX :" << index << std::endl;
+	std::cout << "Between" << temp->next->data << "and" << temp->previous->data;
+
+	return true;
 
 }
 
@@ -203,7 +225,7 @@ inline void List<T>::initialize()
 template<typename T>
 inline bool List<T>::isEmpty() const
 {
-	if (getLength > 0)
+	if (getLength() > 0)
 	{
 		return false;
 	}
