@@ -8,8 +8,8 @@ public:
 	Iterator();
 	Iterator(Node<T>* node);
 
-	Iterator<T> operator++(T);
-	Iterator<T> operator--(T);
+	Iterator<T> operator++(int);
+	Iterator<T> operator--(int);
 	const bool operator==(const Iterator<T>& iter);
 	const bool operator!=(const Iterator<T>& iter);
 	T operator*();
@@ -31,7 +31,7 @@ inline Iterator<T>::Iterator(Node<T>* node)
 }
 
 template<typename T>
-inline Iterator<T> Iterator<T>::operator++(T)
+inline Iterator<T> Iterator<T>::operator++(int)
 {
 	//If not at end goes to next node
 	if (m_current->next != nullptr)
@@ -43,7 +43,7 @@ inline Iterator<T> Iterator<T>::operator++(T)
 }
 
 template<typename T>
-inline Iterator<T> Iterator<T>::operator--(T)
+inline Iterator<T> Iterator<T>::operator--(int)
 {
 	//If current node is not first
 	if (m_current->previous != nullptr)

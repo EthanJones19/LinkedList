@@ -4,6 +4,6 @@ Linked List:
 
 Description:
 
-Showing working linked list.
+Showing how linked list works.
 
 Controls: Esc to exist.
