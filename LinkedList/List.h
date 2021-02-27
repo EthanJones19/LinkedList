@@ -27,6 +27,7 @@ public:
 
 	const List<T>& operator=(const List<T>& other);
 
+
 protected:
 	Node<T>* m_head;
 	Node<T>* m_tail;
@@ -101,8 +102,8 @@ template<typename T>
 inline bool List<T>::contains(const T& object)
 {
 	//Checks if object is first or last
-	if (this->m_first->info == object) return true;
-	if (this->m_tail->info == object) return true;
+	if (this->m_head->data == object) return true;
+	if (this->m_tail->data == object) return true;
 
 	//Starts iteratoring from front to back
 	for (auto i = this->begin(); i != this->end(); i++)
@@ -225,74 +226,22 @@ inline bool List<T>::insert(const T& value, int index)
 template<typename T>
 inline bool List<T>::remove(const T& value)
 {
-	//Sets iterator to head
-	Node<T>* iter = m_head;
-	
-	//If head's data is the same as value
-	if (m_head->data == value)
-	{
-		//If the length is the same as 1
-		if (getLength() == 1)
+	Iterator<T> iter = Iterator<T>();
+	for (Iterator<T> iterator = begin(); iter != end(); iter++)
+		if (contains(value))
 		{
-			//Sets head and tail to null
-			m_head = nullptr;
-			m_tail = nullptr;
-			//Delete iterator
-			delete iter;
-			//Sets node counts negative
+			if (iter == m_head)
+			{
+				m_head = iter.m_current->previous;
+			}
+			iter.m_current->next->previous = iter.m_current->previous;
+			iter.m_current->next = iter.m_current->next;
+
+			delete(iter.m_current);
 			m_nodeCount--;
-			//Returns true
 			return true;
 		}
-		//Sets head to iterators next
-		m_head = iter->next;
-		//Deletes the iterator
-		delete iter;
-		//Sets the node count negative
-		m_nodeCount--;
-		//Returns true
-		return true;
-	}
-
-	//If the tail's data is the same as the value
-	if (m_tail->data == value)
-	{
-		//Sets iterator to the tail
-		iter = m_tail;
-		//Sets the tail the iterator's previous
-		m_tail = iter->previous;
-		//Deletes the iterator
-		delete iter;
-		//Sets the node count negative
-		m_nodeCount--;
-		//Return true
-		return true;
-	}
-
-	//Sets the iterator to iterators next
-	iter = iter->next;
-
-	//WHile iterator is not null
-	while (iter != nullptr)
-	{
-		//If the iterator's data is the same as value
-		if (iter->data == value)
-		{
-			//Sets iterator's next to iterator's previous
-			iter->next->previous = iter->previous;
-			//Sets iterator's previous to iterator's next
-			iter->previous->next = iter->next;
-			//Deletes the iterator
-			delete iter;
-			//Returns true
-			return true;
-		}
-		else
-		{
-			//Sets iterator to iterator's next
-			iter = iter->next;
-		}
-	}
+	return false;
 
 }
 
@@ -312,6 +261,7 @@ inline void List<T>::print() const
 		std::cout << *i << std::endl;
 	}
 	std::cout << *(this->end());
+
 }
 
 template<typename T>
@@ -343,8 +293,16 @@ inline bool List<T>::isEmpty() const
 template<typename T>
 inline bool List<T>::getData(Iterator<T>& iter, int index)
 {
-	//Sets iterator to have a index
-	iter = iter + index;
+	//Sets iterator to begin
+	iter = begin();
+
+	for (int i = 0; i < index; i++)
+	{
+		iter = iter++;
+	}
+
+	return false;
+
 }
 
 template<typename T>
@@ -359,36 +317,28 @@ inline int List<T>::getLength() const
 template<typename T>
 inline void List<T>::sort()
 {
-	//Sets sorted to false
-	bool sorted = false;
-	//Sets the current node to head
-	Node<T>* currentNode = m_head;
-	//Sets the next node to head's next
-	Node<T>* nextNode = m_head->next;
 
-	//While the list is being sorted
-	while (!sorted)
+	for (int i = 0; i < getLength(); i++)
 	{
-		//Sets sorted to true
-		sorted = true;
+		//Sets pointer to head
+		Node<T>* node = m_head;
 
-		//While next node is not null
-		while (nextNode != nullptr)
+		for (int j = 0; j < getLength() - 1; j++)
 		{
-			//If the current node's data is greater than next node's data
-			if (currentNode->data > nextNode->data)
+			//Checks if this node is greater than the last node
+			if (node->data > node->next->data)
 			{
-				T data = nextNode->data;
-				nextNode->data = currentNode->data;
-				currentNode->data = data;
-				sorted = false;
+				//Swap data in node with node to next
+				T temp = node->data;
+				node->data = node->next->data;
+				node->next->data = temp;
 			}
-			//Sets current node to next node
-			currentNode = nextNode;
-			//Sets the next node to current node's next
-			nextNode = currentNode->next;
+
+			//Sets node to next node
+			node = node->next;
 		}
 	}
+	
 }
 
 

@@ -1,4 +1,7 @@
+#include <iostream>
 #include "List.h"
+
+
 
 int main()
 {
@@ -10,9 +13,14 @@ int main()
 	_list->pushFront(-8);
 	_list->pushFront(5);
 	_list->insert(4, 1);
+	std::cout << std::endl;
 	_list->print();
 	_list->remove(4);
 	_list->sort();
+	std::cout << "\n";
 	_list->print();
+	system("pause");
 	return 0;
+
+
 }

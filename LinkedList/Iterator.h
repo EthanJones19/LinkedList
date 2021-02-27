@@ -14,7 +14,12 @@ public:
 	const bool operator!=(const Iterator<T>& iter);
 	T operator*();
 
-private:
+	Node<T>* getCurrent();
+
+
+	void setCurrent(Node<T>* input);
+
+
 	Node<T>* m_current;
 };
 
@@ -92,4 +97,17 @@ template<typename T>
 inline T Iterator<T>::operator*()
 {
 	return m_current->data;
+}
+
+
+template<typename T>
+inline Node<T>* Iterator<T>::getCurrent()
+{
+	return m_current;
+}
+
+template<typename T>
+inline void Iterator<T>::setCurrent(Node<T>* input)
+{
+	m_current = input;
 }

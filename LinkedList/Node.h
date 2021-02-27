@@ -12,6 +12,8 @@ public:
 	T data;
 };
 
+
+
 template<typename T>
 inline Node<T>::Node(T value)
 {
